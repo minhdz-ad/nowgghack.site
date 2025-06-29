@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NowGG Cloud</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: filter 0.3s;
+    }
+    .app-grid {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      padding: 30px;
+    }
+    .app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .app img {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+    }
+    .taskbar {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 9999;
+    }
+    .popup h2 {
+      margin-top: 0;
+    }
+    .popup input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+    .popup button {
+      padding: 6px 12px;
+      margin-top: 10px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .cloudphone-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: white;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+    }
+    .cloudphone-header {
+      background: #f0f0f0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+    .cloudphone-close {
+      background: #ccc;
+      border: none;
+      padding: 4px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .cloudphone-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body id="mainBody">
+  <div class="app-grid">
+    <div class="app">
+      <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" onclick="openSettings()">
+      <span>Cài đặt</span>
+    </div>
+    <div class="app">
+      <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" onclick="openCloudPhone()">
+      <span>Cloud Phone</span>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <span>Cloud Phone Free</span>
+  </div>
+
+  <div class="popup" id="settingsPopup">
+    <span class="close-btn" onclick="closeSettings()">x</span>
+    <h2>Cài đặt</h2>
+    <label>Đổi hình nền (URL ảnh):</label>
+    <input type="text" id="bgUrlInput" placeholder="Dán URL ảnh vào đây">
+    <label>Chỉnh độ sáng (0.1 - 1):</label>
+    <input type="range" id="brightnessRange" min="0.1" max="1" step="0.01" value="1">
+    <button onclick="applySettings()">Áp dụng</button>
+  </div>
+
+  <div class="cloudphone-container" id="cloudPhonePopup">
+    <div class="cloudphone-header">
+      <span>Cloud Phone</span>
+      <button class="cloudphone-close" onclick="closeCloudPhone()">x</button>
+    </div>
+    <iframe class="cloudphone-iframe" src="https://uproxy.online"></iframe>
+  </div>
+
+  <script>
+    function openSettings() {
+      document.getElementById("settingsPopup").style.display = "block";
+    }
+    function closeSettings() {
+      document.getElementById("settingsPopup").style.display = "none";
+    }
+    function applySettings() {
+      const url = document.getElementById("bgUrlInput").value;
+      const brightness = document.getElementById("brightnessRange").value;
+      if (url) {
+        document.body.style.backgroundImage = `url('${url}')`;
+      }
+      document.body.style.filter = `brightness(${brightness})`;
+      closeSettings();
+    }
+
+    function openCloudPhone() {
+      document.getElementById("cloudPhonePopup").style.display = "flex";
+    }
+    function closeCloudPhone() {
+      document.getElementById("cloudPhonePopup").style.display = "none";
+    }
+  </script>
+</body>
+</html>
